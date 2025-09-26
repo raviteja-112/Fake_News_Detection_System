@@ -1,12 +1,12 @@
 import os
 from groq import Groq
 import re
-
+api_key = os.getenv("api_key")
 class GroqNewsAnalyzer:
     def __init__(self):
         # Initialize Groq client
         # Note: You'll need to set GROQ_API_KEY environment variable
-        self.client = Groq()
+        self.client = Groq(api_key=api_key)
         self.model = "gemma2-9b-it"
 
     def analyze_news(self, news_text, ml_prediction=None, ml_confidence=None):
