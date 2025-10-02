@@ -221,6 +221,7 @@ def show_visualization_page():
 
     # Date analysis
     st.subheader("Publication Timeline")
+    df['date'] = df['date'].str.strip()  # Remove trailing spaces
     df['date'] = pd.to_datetime(df['date'], errors='coerce')
     df['month_year'] = df['date'].dt.to_period('M')
 
@@ -230,15 +231,16 @@ def show_visualization_page():
         monthly_counts[0] = 0
     if 1 not in monthly_counts.columns:
         monthly_counts[1] = 0
-    monthly_counts = monthly_counts[[0, 1]]
-    monthly_counts.columns = ['Fake', 'Real']
+    monthly_counts = monthly_counts[[1, 0]]  # Real first, then Fake
+    monthly_counts.columns = ['Real', 'Fake']
 
     fig, ax = plt.subplots(figsize=(12, 6))
     monthly_counts.plot(kind='line', marker='o', ax=ax)
     ax.set_title("Monthly Publication Trends")
     ax.set_xlabel("Month")
     ax.set_ylabel("Number of Articles")
-    ax.legend(['Fake News', 'Real News'])
+    # Legend matches the column order: Real first, then Fake
+    ax.legend(['Real News', 'Fake News'])
     plt.xticks(rotation=45)
     st.pyplot(fig)
 
