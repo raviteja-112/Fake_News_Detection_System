@@ -25,28 +25,39 @@ st.markdown("""
     .prediction-box {
         padding: 1.5rem;
         border-radius: 10px;
-        border: 2px solid;
+        border: 3px solid;
         margin: 1rem 0;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     }
     .fake-news {
-        background-color: #ffe6e6;
-        border-color: #ff6b6b;
+        background: linear-gradient(135deg, #ffe6e6 0%, #ffcccc 100%);
+        border-color: #ff4444;
+        color: #cc0000;
+    }
+    .fake-news h3 {
+        color: #cc0000 !important;
     }
     .real-news {
-        background-color: #e6ffe6;
-        border-color: #4ecdc4;
+        background: linear-gradient(135deg, #e6ffe6 0%, #ccffcc 100%);
+        border-color: #44aa44;
+        color: #006600;
+    }
+    .real-news h3 {
+        color: #006600 !important;
     }
     .confidence-meter {
         width: 100%;
-        height: 20px;
-        border-radius: 10px;
+        height: 24px;
+        border-radius: 12px;
         background-color: #f0f0f0;
         margin: 0.5rem 0;
+        border: 1px solid #ddd;
     }
     .confidence-fill {
         height: 100%;
-        border-radius: 10px;
+        border-radius: 12px;
         transition: width 0.5s ease;
+        box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1);
     }
 </style>
 """, unsafe_allow_html=True)
@@ -88,13 +99,13 @@ def show_prediction_page():
                 result = predict_news(news_text)
 
                 # Display results
-                display_prediction_results(result)
+                display_prediction_results(result, news_text)
 
             except Exception as e:
                 st.error(f"Error during analysis: {str(e)}")
                 st.info("Make sure your model files are in the correct location.")
 
-def display_prediction_results(result):
+def display_prediction_results(result, news_text):
     """Display the prediction results in a nice format"""
 
     prediction_class = result['prediction_label']
